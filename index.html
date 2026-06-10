@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishansh Chawla | Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #050816;
+            --bg-secondary: #0F172A;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --primary-accent: #2563EB;
+            --secondary-accent: #60A5FA;
+            --text-main: #F8FAFC;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-nav {
+            background: rgba(5, 8, 22, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-accent);
+        }
+
+        #custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--secondary-accent);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-slider::-webkit-slider-runnable-track {
+            background: #1E293B;
+            height: 6px;
+            border-radius: 3px;
+        }
+        .timeline-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            margin-top: -5px;
+            background-color: var(--secondary-accent);
+            border: 2px solid #FFFFFF;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary-accent);
+            transition: transform 0.1s ease;
+        }
+        .timeline-slider::-webkit-slider-thumb:active {
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="loader" class="fixed inset-0 z-[10000] bg-[#050816] flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="relative flex items-center justify-center mb-4">
+            <div class="w-20 h-20 border-2 border-t-2 border-blue-600 rounded-full animate-spin"></div>
+            <div class="absolute text-xl font-bold font-display tracking-widest text-white">KC</div>
+        </div>
+        <div class="text-sm tracking-widest text-slate-400 font-display animate-pulse">INITIALIZING PORTFOLIO...</div>
+    </div>
+
+    <div id="custom-cursor" class="hidden md:block"></div>
+    <div id="cursor-glow" class="hidden md:block fixed w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none z-0 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-100 ease-out"></div>
+    <div class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="absolute top-[60%] right-[-10%] w-[600px] h-[600px] bg-indigo-900/15 rounded-full blur-[180px] pointer-events-none"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="font-display font-bold text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 cursor-hover">
+                KRISHANSH<span class="text-blue-500">.</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-slate-300">
+                <a href="#about" class="hover:text-blue-400 transition-colors cursor-hover">About</a>
+                <a href="#skills" class="hover:text-blue-400 transition-colors cursor-hover">Skills</a>
+                <a href="#projects" class="hover:text-blue-400 transition-colors cursor-hover">Projects</a>
+                <a href="#archive" class="hover:text-blue-400 transition-colors cursor-hover">Archive</a>
+                <a href="#beyond" class="hover:text-blue-400 transition-colors cursor-hover">Beyond Coding</a>
+                <a href="#journey" class="hover:text-blue-400 transition-colors cursor-hover">My Journey</a>
+                <a href="#contact" class="px-5 py-2.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 rounded-lg hover:bg-blue-600 hover:text-white transition-all duration-300 cursor-hover shadow-[0_0_15px_rgba(37,99,235,0.15)]">Contact</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-2xl text-slate-300 focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-[#050816]/95 border-b border-slate-800 flex flex-col p-6 space-y-4 font-display text-lg">
+            <a href="#about" class="mobile-link py-2 text-slate-300">About</a>
+            <a href="#skills" class="mobile-link py-2 text-slate-300">Skills</a>
+            <a href="#projects" class="mobile-link py-2 text-slate-300">Projects</a>
+            <a href="#archive" class="mobile-link py-2 text-slate-300">Archive</a>
+            <a href="#beyond" class="mobile-link py-2 text-slate-300">Beyond Coding</a>
+            <a href="#journey" class="mobile-link py-2 text-slate-300">My Journey</a>
+            <a href="#contact" class="mobile-link py-3 text-center bg-blue-600 text-white rounded-lg">Contact</a>
+        </div>
+    </nav>
+
+    <section id="home" class="relative min-h-screen pt-20 flex items-center justify-center grid-bg overflow-hidden">
+        <canvas id="particle-canvas"></canvas>
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center py-12">
+            <div class="lg:col-span-8 flex flex-col justify-center">
+                <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wider uppercase mb-6 max-w-max animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                    <span>Available for Collaborations</span>
+                </div>
+                <h1 class="text-6xl sm:text-7xl md:text-8.5xl font-extrabold tracking-tighter text-white leading-none mb-4">
+                    KRISHANSH <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-400 to-indigo-300">CHAWLA</span>
+                </h1>
+                <div class="h-8 mb-6 text-xl sm:text-2xl font-display font-medium text-slate-400">
+                    <span id="typed-text" class="typing-cursor text-blue-400"></span>
+                </div>
+                <p class="text-base sm:text-lg text-slate-400 max-w-xl font-normal leading-relaxed mb-10">
+                    Computer Science student at VIT Vellore passionate about building digital products, solving real-world problems, creating meaningful user experiences, and continuously learning new technologies.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 font-semibold tracking-wide shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-0.5 transition-all duration-300 cursor-hover">Explore Projects</a>
+                    <a href="#contact" class="px-8 py-4 rounded-xl border border-slate-700 hover:border-slate-500 bg-slate-900/40 backdrop-blur-sm font-semibold tracking-wide hover:-translate-y-0.5 transition-all duration-300 cursor-hover">Contact Me</a>
+                </div>
+            </div>
+            <div class="lg:col-span-4 flex flex-col space-y-4 sm:space-y-6">
+                <div class="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-500">
+                    <div class="absolute -right-6 -bottom-6 text-slate-800/10 text-8xl font-bold select-none group-hover:text-blue-500/5 transition-colors">35+</div>
+                    <div class="text-4xl sm:text-5xl font-extrabold font-display text-blue-400 mb-2">35+</div>
+                    <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Total Projects Built</div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-500">
+                    <div class="absolute -right-6 -bottom-6 text-slate-800/10 text-8xl font-bold select-none group-hover:text-blue-500/5 transition-colors">16</div>
+                    <div class="text-4xl sm:text-5xl font-extrabold font-display text-slate-200 mb-2">16</div>
+                    <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Web Projects Developed</div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-500">
+                    <div class="absolute -right-6 -bottom-6 text-slate-800/10 text-8xl font-bold select-none group-hover:text-blue-500/5 transition-colors">16</div>
+                    <div class="text-4xl sm:text-5xl font-extrabold font-display text-slate-200 mb-2">16</div>
+                    <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold">Python Automations & Engines</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 max-w-7xl mx-auto px-6 relative z-10 reveal">
+        <div class="flex flex-col mb-12">
+            <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Discovery</span>
+            <h2 class="text-4xl font-bold tracking-tight text-white font-display">About Me</h2>
+            <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-slate-300 leading-relaxed">
+                <p>
+                    I am <strong class="text-white">Krishansh Chawla</strong>, a Computer Science student at VIT Vellore. I enjoy transforming ideas into impactful digital products through development, design, and computational creativity.
+                </p>
+                <p>
+                    From modular management systems and architectural student platforms to interactive full-stack ecosystems, I love building projects that mitigate real-world vulnerabilities while sharpening my architecture design pipelines.
+                </p>
+                <p class="bg-blue-950/20 border-l-2 border-blue-500 p-4 rounded-r-xl text-sm sm:text-base text-slate-400 italic">
+                    "Beyond algorithmic coding, I am intensely passionate about music production, graphic design, video editing, dancing, speed cubing, and meeting multifaceted visionaries across ecosystems."
+                </p>
+            </div>
+            <div class="lg:col-span-5 grid grid-cols-2 gap-4 w-full">
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="text-2xl font-bold font-display text-white">35+</div>
+                    <div class="text-xs text-slate-400 mt-1">Projects Launched</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="text-2xl font-bold font-display text-blue-400">10+</div>
+                    <div class="text-xs text-slate-400 mt-1">Technologies</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="text-sm font-bold font-display text-white">VIT Vellore</div>
+                    <div class="text-xs text-slate-400 mt-1">Institution</div>
+                </div>
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="text-sm font-bold font-display text-blue-400">CSE Core</div>
+                    <div class="text-xs text-slate-400 mt-1">Specialization</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-24 bg-[#0F172A]/40 border-y border-slate-900 reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col mb-16">
+                <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Arsenal</span>
+                <h2 class="text-4xl font-bold tracking-tight text-white font-display">Technical Toolkit</h2>
+                <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-display text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-code text-blue-500 text-sm"></i> Languages
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Python</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Java</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">C</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">C++</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">JavaScript</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">HTML / CSS</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-display text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-globe text-blue-500 text-sm"></i> Web Engineering
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">PHP</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">MySQL</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Bootstrap</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">React Architecture</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-display text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-bezier-curve text-blue-500 text-sm"></i> Design & Creative
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Figma</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">UI/UX Layouts</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Graphic Production</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Video Synthesis</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold font-display text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-brain text-blue-500 text-sm"></i> Execution Vectors
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Critical Thinking</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Problem Solving</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Creative Disruption</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-[#050816] text-xs font-medium text-slate-300 border border-slate-800">Team Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 max-w-7xl mx-auto px-6 reveal">
+        <div class="flex flex-col mb-16">
+            <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Showcase</span>
+            <h2 class="text-4xl font-bold tracking-tight text-white font-display">Resume-Worthy Formats</h2>
+            <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div onclick="triggerScreenshotModal('pg-life')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-blue-500/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded">Full-Stack Ecosystem</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-blue-400 transition-colors">PG Life</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Student accommodation ecosystem offering multi-city housing catalogs for domestic and NRI application demographics.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">HTML</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">CSS</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">PHP</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">MySQL</span>
+                </div>
+            </div>
+
+            <div onclick="triggerScreenshotModal('attendance-system')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">Web App Portal</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-emerald-400 transition-colors">Attendance Management System</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Administrative portal engineered for real-time validation registry logging and structural attendance matrix tracking.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">HTML</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">CSS</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">JS</span>
+                </div>
+            </div>
+
+            <div onclick="triggerScreenshotModal('wsm')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-purple-500/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded">Python Engine</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-purple-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-purple-400 transition-colors">Wildlife Sanctuary Management</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Comprehensive core engine handling multi-zone registration, asset inventories, security logs, and file ledger configurations.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">Python CLI</span>
+                </div>
+            </div>
+
+            <div onclick="triggerScreenshotModal('banking-system')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-blue-500/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded">System App UI</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-blue-400 transition-colors">Banking Management System</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Operational database interface model tracking client records, floating account handling, and validation ledger steps.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">HTML</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">CSS</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">JS</span>
+                </div>
+            </div>
+
+            <div onclick="triggerScreenshotModal('expense-tracker')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-teal-400/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-teal-400 bg-teal-500/10 px-2.5 py-1 rounded">Finance Tool Layout</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-teal-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-teal-400 transition-colors">Expense Tracker App</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Financial monitoring application calculating continuous expenses, itemized indices, and remaining balances.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">HTML</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">CSS</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">JS</span>
+                </div>
+            </div>
+
+            <div onclick="triggerScreenshotModal('weather-app')" class="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-amber-400/40 hover:-translate-y-1 transition-all duration-300 cursor-hover p-6 sm:p-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded">API Integration</span>
+                        <i class="fa-solid fa-expand text-xs text-slate-500 group-hover:text-amber-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 font-display group-hover:text-amber-400 transition-colors">Weather Forecasting App</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">Dynamic real-time dashboard consuming geographical query payloads to synchronize with asynchronous external REST weather environments.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-4 border-t border-slate-800">
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">HTML</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">CSS</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-900 text-slate-400">JS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="archive" class="py-24 bg-[#0F172A]/20 border-t border-slate-900 reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col mb-12">
+                <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Omnipresence</span>
+                <h2 class="text-4xl font-bold tracking-tight text-white font-display">Production Archive Directory</h2>
+                <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+            </div>
+
+            <div class="flex space-x-4 mb-8">
+                <button onclick="switchArchive('web')" id="tab-btn-web" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-blue-600 text-white shadow-md cursor-hover transition-all">
+                    16 Web Deployments
+                </button>
+                <button onclick="switchArchive('python')" id="tab-btn-python" class="px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-slate-400 border border-slate-800 cursor-hover transition-all">
+                    16 Python Engines
+                </button>
+            </div>
+
+            <div id="archive-web" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-300">
+                <div onclick="triggerScreenshotModal('calculator-web')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Calculator App</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('currency')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Currency Converter</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('clock')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Digital Clock</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('mothersday')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Mother's Day Website</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('notes')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Notes App</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('password')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Password Generator</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('pg-life')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">PG-Life UI</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('qr-code')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">QR Code Generator</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('quiz-game')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Quiz Game</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('snake-game')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Snake Game</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('tic-tac-toe')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Tic Tac Toe</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('todo-web')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">To Do List</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('pg-life')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">PG Life Core</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('attendance-system')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Attendance System</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('banking-system')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Banking Platform</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('expense-tracker')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-medium text-slate-300 group-hover:text-white">Expense Tracker App</span>
+                    <i class="fa-solid fa-expand text-xs text-slate-600 group-hover:text-blue-400"></i>
+                </div>
+            </div>
+
+            <div id="archive-python" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 transition-all duration-300">
+                <div onclick="triggerScreenshotModal('alarm')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">alarm.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('bank-management')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">bank_management.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('bank')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">bank.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('base')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">base.py (converter)</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('calculator-py')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">calculator.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('dice')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">dice.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('expense-py')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">expense.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('login')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">login.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('number')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">number.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('passgenerator')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">passgenerator.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('passstorer')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">passstorer.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('phonebook')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">phonebook.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('rps-game')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">rps_game.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('todolist')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">todolist.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('wordcounter')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">wordCounter.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+                <div onclick="triggerScreenshotModal('wsm')" class="glass-card p-4 rounded-xl flex items-center justify-between group hover:border-slate-700 cursor-hover">
+                    <span class="text-sm font-mono text-slate-300 group-hover:text-white">wsm.py</span>
+                    <i class="fa-solid fa-terminal text-xs text-slate-600 group-hover:text-purple-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="screenshot-lightbox" class="fixed inset-0 bg-[#050816]/90 backdrop-blur-md z-[20000] hidden items-center justify-center p-4">
+        <div class="glass-card max-w-3xl w-full rounded-2xl overflow-hidden border border-slate-800 flex flex-col relative animate-fadeIn">
+            <button onclick="closeScreenshotModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl z-10 p-2 cursor-hover">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="p-6 border-b border-slate-800">
+                <h3 id="modal-title" class="text-2xl font-bold text-white font-display">Project Blueprint View</h3>
+                <p id="modal-subtitle" class="text-xs text-blue-400 font-semibold tracking-wider uppercase mt-1">Component Module</p>
+            </div>
+            <div class="relative bg-slate-950 aspect-video w-full flex items-center justify-center border-b border-slate-800">
+                <img id="modal-img-frame" src="" alt="Live Application Mockup Preview Screen" class="w-full h-full object-cover hidden">
+                <div id="modal-terminal-mock" class="hidden font-mono text-xs p-6 text-purple-400 text-left w-full h-full overflow-y-auto leading-relaxed">
+                    <span>krishansh@vit-vellore:~/projects$ python3 <span id="modal-script-name">script.py</span></span><br>
+                    <span class="text-slate-500">[SYSTEM INFORMATION RUNNING REPO SEQUENCE ENVIRONMENT]</span><br>
+                    <span class="text-emerald-400">&gt;&gt;&gt; Terminal logic compilation verified. Core loop status: 200 OK</span>
+                </div>
+            </div>
+            <div class="p-6 bg-slate-900/50">
+                <p id="modal-description" class="text-sm text-slate-400 leading-relaxed">No data log entry compiled.</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="beyond" class="py-24 max-w-7xl mx-auto px-6 reveal">
+        <div class="flex flex-col mb-16">
+            <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Multiverse</span>
+            <h2 class="text-4xl font-bold tracking-tight text-white font-display">Beyond Coding</h2>
+            <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-sliders text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Music Production</h3>
+                <p class="text-xs text-slate-400">Sound design & arranging arrangements.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-bezier-curve text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Graphic Designing</h3>
+                <p class="text-xs text-slate-400">Visual identity layouts and vector engineering.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-video text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Video Editing</h3>
+                <p class="text-xs text-slate-400">Dynamic cut pacing and asset timeline synchronization.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-bolt text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Dancing</h3>
+                <p class="text-xs text-slate-400">Rhythmic spatial awareness and kinetic freestyle coordination.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-cubes text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Speed Cubing</h3>
+                <p class="text-xs text-slate-400">3x3 spatial algorithmic structural acceleration execution.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-mountain text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Trekking</h3>
+                <p class="text-xs text-slate-400">Endurance testing across varying real terrain elevations.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-network-wired text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Networking</h3>
+                <p class="text-xs text-slate-400">Building bridges across modern engineering and startup teams.</p>
+            </div>
+            <div class="glass-card p-6 rounded-2xl relative overflow-hidden group hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1">
+                <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-user-plus text-xl"></i>
+                </div>
+                <h3 class="font-display font-bold text-white text-base sm:text-lg mb-1">Making Friends</h3>
+                <p class="text-xs text-slate-400">Fostering interpersonal collaboration and team cross-pollination.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="journey" class="py-24 bg-[#050816] relative overflow-hidden reveal">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-col mb-12 items-center text-center">
+                <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Chronicle</span>
+                <h2 class="text-4xl font-bold tracking-tight text-white font-display">My Journey</h2>
+                <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border border-slate-800 space-y-8">
+                <div class="relative pt-4">
+                    <input type="range" id="timeline-range" min="2024" max="2026" value="2026" step="1" 
+                           class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer timeline-slider focus:outline-none cursor-hover">
+                    
+                    <div class="flex justify-between text-xs font-bold font-display px-1 pt-4 text-slate-500">
+                        <span id="tick-2024" class="transition-colors duration-300">2024</span>
+                        <span id="tick-2025" class="transition-colors duration-300">2025</span>
+                        <span id="tick-2026" class="text-blue-400 transition-colors duration-300">2026 (PRESENT)</span>
+                    </div>
+                </div>
+
+                <div class="relative min-h-[220px]">
+                    <div id="slide-2024" class="hidden transition-all duration-500 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl font-bold font-display text-blue-500">2024</span>
+                            <h3 class="text-lg font-bold text-slate-200">Foundation Laying at VIT</h3>
+                        </div>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">▪</span> Started B.Tech Computer Science and Engineering at VIT Vellore.</li>
+                            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">▪</span> Built initial modular Python projects and script management loops.</li>
+                            <li class="flex items-start gap-2"><span class="text-blue-500 mt-1">▪</span> Began exploratory visual mapping paths for deep Web Development & UI/UX paradigms.</li>
+                        </ul>
+                    </div>
+
+                    <div id="slide-2025" class="hidden transition-all duration-500 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl font-bold font-display text-indigo-400">2025</span>
+                            <h3 class="text-lg font-bold text-slate-200">Scale, Architecture & Disruption</h3>
+                        </div>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">▪</span> Built and completed execution cycles for the Attendance Management System.</li>
+                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">▪</span> Engineered and conceptualized PG Life Student Accommodation discovery stack.</li>
+                            <li class="flex items-start gap-2"><span class="text-indigo-400 mt-1">▪</span> <strong class="text-red-400 font-medium">Critical Incident:</strong> Faced one of the toughest challenges of my life after surviving a serious, near-fatal accident.</li>
+                        </ul>
+                    </div>
+
+                    <div id="slide-2026" class="block transition-all duration-500 space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl font-bold font-display text-emerald-400">2026</span>
+                            <h3 class="text-lg font-bold text-slate-200">The Absolute Resurgence</h3>
+                        </div>
+                        <ul class="space-y-2 text-sm text-slate-400">
+                            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">▪</span> Devoted intensive timeline focus toward physiological recovery, grid training, and step-by-step rehabilitation.</li>
+                            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">▪</span> Defied physical downtime variables by deploying 35+ cumulative dynamic system modules.</li>
+                            <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">▪</span> Scaling modern engineering frameworks alongside continuous creative outputs in vector sound synthesis.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 glass-card p-8 rounded-3xl relative overflow-hidden border border-red-500/20 shadow-[0_0_40px_rgba(239,68,68,0.05)] bg-gradient-to-br from-[#0F172A]/90 via-[#050816] to-[#0F172A]/70">
+                <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-red-600/5 rounded-full blur-[80px] pointer-events-none"></div>
+                <div class="max-w-2xl mx-auto text-center space-y-4">
+                    <div class="text-2xl sm:text-4xl font-extrabold font-display tracking-tight text-white">
+                        "THEY WANTED TO STOP ME. <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-amber-300">I DIDN'T.</span>"
+                    </div>
+                    <div class="h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent w-full my-2"></div>
+                    <div class="text-slate-300 text-xs sm:text-sm space-y-2 text-left sm:text-center leading-relaxed">
+                        <p>I learned that resilience is built one step at a time.</p>
+                        <p>The accident radically changed my day-to-day physical routine, but it did not change my absolute career trajectory.</p>
+                        <p>Every complex repository successfully compiled and every step taken became undeniable proof that structural setbacks do not define your terminal horizon.</p>
+                        <p class="text-white font-semibold pt-2 text-center">Today I continue moving forward with greater discipline, deep gratitude, and absolute execution determination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-[#0F172A]/40 border-y border-slate-900 reveal">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center text-blue-400"><i class="fa-solid fa-square-poll-vertical text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">35+ Launched</div>
+                        <div class="text-xs text-slate-400">Total Code Implementations</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-400"><i class="fa-solid fa-cubes text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">Cubing Elite</div>
+                        <div class="text-xs text-slate-400">Active Member Cubing Club</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-600/10 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-graduation-cap text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">VIT CSE Core</div>
+                        <div class="text-xs text-slate-400">High-Fidelity Track Environment</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-600/10 flex items-center justify-center text-purple-400"><i class="fa-solid fa-bezier-curve text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">UI/UX Devathon</div>
+                        <div class="text-xs text-slate-400">Active Architecture Competitor</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-400"><i class="fa-solid fa-server text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">16 Web Deployments</div>
+                        <div class="text-xs text-slate-400">Interfaces, Systems & DB Stacks</div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-600/10 flex items-center justify-center text-rose-400"><i class="fa-solid fa-terminal text-xl"></i></div>
+                    <div>
+                        <div class="text-xl font-bold font-display text-white">16 Python Engines</div>
+                        <div class="text-xs text-slate-400">Functional Utilities & Core Automations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-24 max-w-7xl mx-auto px-6 reveal">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-5 flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-col mb-6">
+                        <span class="text-sm font-bold tracking-widest text-blue-500 uppercase mb-2">Transmission</span>
+                        <h2 class="text-4xl font-bold tracking-tight text-white font-display">Let's Connect</h2>
+                        <div class="w-16 h-1 bg-blue-500 mt-3 rounded-full"></div>
+                    </div>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed mb-8">
+                        Whether you are scouting talent for engineering roles or looking to collaborate on high-end creative experiences—drop your transmission logs here.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <a href="mailto:krishanshchawla0@gmail.com" 
+                       class="glass-card p-4 rounded-xl flex items-center space-x-4 group hover:border-blue-500/30 transition-all duration-300 cursor-hover">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase font-semibold">Direct Mailbox</div>
+                            <div class="text-xs sm:text-sm text-slate-300 truncate font-mono">
+                                krishanshchawla0@gmail.com
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/Krishansh-Chawla" 
+                       target="_blank"
+                       class="glass-card p-4 rounded-xl flex items-center space-x-4 hover:border-blue-500/40 transition-all duration-300 cursor-hover">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 uppercase font-semibold">GitHub</div>
+                            <div class="text-sm text-blue-400">
+                                github.com/Krishansh-Chawla
+                            </div>
+                        </div>
+                    </a>
+                
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 glass-card p-6 sm:p-8 rounded-3xl border border-slate-800">
+                ```
+                <form class="space-y-6"
+                      action="https://formsubmit.co/krishanshchawla0@gmail.com"
+                      method="POST">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="New Portfolio Contact Submission">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="http://127.0.0.1:5500/index.html">
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold text-slate-400 tracking-wider">
+                            Your Name
+                        </label>
+                
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="John Doe"
+                            required
+                            class="w-full bg-[#050816] border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold text-slate-400 tracking-wider">
+                            Your Email Endpoint
+                        </label>
+                
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="client@organization.com"
+                            required
+                            class="w-full bg-[#050816] border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold text-slate-400 tracking-wider">
+                            Message Payload
+                        </label>
+                        <textarea
+                            rows="4"
+                            name="message"
+                            placeholder="Describe the specifications or proposal requirements..."
+                            required
+                            class="w-full bg-[#050816] border border-slate-800 rounded-xl px-4 py-3.5 text-sm text-slate-100 focus:outline-none focus:border-blue-500"></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 font-semibold text-sm tracking-widest uppercase transition-colors shadow-lg shadow-blue-600/10 cursor-hover">
+                        Dispatch Transmission
+                    </button>
+                </form>
+                ```
+                </div>
+                
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-900 bg-[#050816] py-12 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-6">
+            <div>
+                <div class="font-display font-bold text-xl text-white tracking-wider">KRISHANSH CHAWLA</div>
+                <div class="text-xs text-slate-500 mt-1 font-medium">Code by Profession. Create by Passion.</div>
+            </div>
+            <div class="text-xs text-slate-600 font-mono">
+                &copy; 2026 Krishansh Chawla. All rights reserved.. Constructed under absolute determination parameters.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('opacity-0');
+                setTimeout(() => loader.remove(), 700);
+            }, 1000);
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => menu.classList.add('hidden'));
+        });
+
+        const strings = ["Computer Science Student", "Web Developer", "Python Programmer", "Creative Technologist", "Problem Solver"];
+        let stringIdx = 0, charIdx = 0, isDeleting = false;
+        const targetEl = document.getElementById('typed-text');
+
+        function type() {
+            const currentString = strings[stringIdx];
+            if (isDeleting) {
+                targetEl.textContent = currentString.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                targetEl.textContent = currentString.substring(0, charIdx + 1);
+                charIdx++;
+            }
+            let typeSpeed = isDeleting ? 40 : 80;
+            if (!isDeleting && charIdx === currentString.length) {
+                typeSpeed = 1800;
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                stringIdx = (stringIdx + 1) % strings.length;
+                typeSpeed = 300;
+            }
+            setTimeout(type, typeSpeed);
+        }
+        setTimeout(type, 1500);
+
+        const cursor = document.getElementById('custom-cursor');
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        function bindCursorHover() {
+            document.querySelectorAll('.cursor-hover').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    cursor.style.width = '45px';
+                    cursor.style.height = '45px';
+                    cursor.style.backgroundColor = 'rgba(96, 165, 250, 0.1)';
+                });
+                item.addEventListener('mouseleave', () => {
+                    cursor.style.width = '20px';
+                    cursor.style.height = '20px';
+                    cursor.style.backgroundColor = 'transparent';
+                });
+            });
+        }
+        bindCursorHover();
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealCheck = () => {
+            revealElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= window.innerHeight * 0.85) el.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', revealCheck);
+        window.addEventListener('load', revealCheck);
+
+        // Core Archive Repository Switcher Toggles
+        function switchArchive(type) {
+            const webGrid = document.getElementById('archive-web');
+            const pythonGrid = document.getElementById('archive-python');
+            const btnWeb = document.getElementById('tab-btn-web');
+            const btnPy = document.getElementById('tab-btn-python');
+            if (type === 'web') {
+                webGrid.classList.remove('hidden');
+                pythonGrid.classList.add('hidden');
+                btnWeb.className = "px-5 py-2.5 rounded-lg text-sm font-semibold bg-blue-600 text-white shadow-md cursor-hover transition-all";
+                btnPy.className = "px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-slate-400 border border-slate-800 cursor-hover transition-all";
+            } else {
+                pythonGrid.classList.remove('hidden');
+                webGrid.classList.add('hidden');
+                btnPy.className = "px-5 py-2.5 rounded-lg text-sm font-semibold bg-blue-600 text-white shadow-md cursor-hover transition-all";
+                btnWeb.className = "px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-slate-400 border border-slate-800 cursor-hover transition-all";
+            }
+            bindCursorHover();
+        }
+
+        // Project Archive Meta Mapping Configuration Database
+        const projectMetaDb = {
+    'pg-life': { 
+        title: 'PG Life Hub', 
+        type: 'Full-Stack Ecosystem Web Deployment', 
+        desc: 'A full-stack PG accommodation platform designed to manage city-wise housing listings, user onboarding, and property discovery workflows. Built with modular architecture to simulate real-world rental systems with structured data handling.', 
+        img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'attendance-system': { 
+        title: 'Attendance Management System', 
+        type: 'Web Application Portal Module', 
+        desc: 'A secure web-based attendance tracking system implementing identity verification, structured logging, and real-time attendance marking. Designed for institutional environments with a focus on accuracy and data integrity.', 
+        img: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'wsm': { 
+        title: 'Wildlife Sanctuary Management System', 
+        type: 'Python Command Line Engine Core', 
+        desc: 'A CLI-based management system for tracking wildlife records, medical history logs, and reservation data. Implements structured data processing and modular command execution for conservation monitoring.', 
+        img: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: true 
+    },
+
+    'banking-system': { 
+        title: 'Banking Management System', 
+        type: 'Web Application UI Architecture', 
+        desc: 'A simulated banking system handling account creation, deposits, withdrawals, and transaction tracking. Focuses on ledger-based operations and financial workflow simulation.', 
+        img: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'expense-tracker': { 
+        title: 'Expense Tracker UI', 
+        type: 'Web Finance Module Interface', 
+        desc: 'A personal finance tracking application that records daily expenses, categorizes spending, and visualizes budget flow using client-side state management.', 
+        img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'weather-app': { 
+        title: 'Weather Forecasting App', 
+        type: 'REST API Synchronization Module', 
+        desc: 'A real-time weather application integrating external APIs to fetch and display dynamic climate data including temperature, humidity, and forecasts.', 
+        img: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'calculator-web': { 
+        title: 'Calculator Suite', 
+        type: 'Web Interface Core', 
+        desc: 'A responsive calculator application supporting arithmetic operations with real-time evaluation and optimized UI interaction handling.', 
+        img: 'https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'currency': { 
+        title: 'Currency Converter Portal', 
+        type: 'REST API Web Application', 
+        desc: 'A currency conversion tool integrating exchange-rate APIs to compute real-time conversion between global currencies.', 
+        img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'clock': { 
+        title: 'Digital Clock Component', 
+        type: 'Native Web DOM Unit', 
+        desc: 'A live digital clock interface synchronized with system time, demonstrating DOM manipulation and real-time UI updates.', 
+        img: 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'mothersday': { 
+        title: 'Mothers Day Platform', 
+        type: 'Static Creative Project', 
+        desc: 'A visually expressive tribute page built with animations and responsive layout techniques to create an emotional user experience.', 
+        img: 'https://images.unsplash.com/photo-1520975928316-7b4b9d7f3a0f?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'notes': { 
+        title: 'Notes Application Module', 
+        type: 'Local Storage Infrastructure', 
+        desc: 'A lightweight note-taking application using browser local storage to persist user data without backend dependency.', 
+        img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'password': { 
+        title: 'Password Generator Matrix', 
+        type: 'Crypt Security Utility', 
+        desc: 'A secure password generator that creates randomized strings using character sets to improve digital security practices.', 
+        img: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'qr-code': { 
+        title: 'QR Code Generator Hub', 
+        type: 'Asset Engineering Portal', 
+        desc: 'A QR generator that converts user input strings into scannable QR codes for quick data sharing and encoding.', 
+        img: 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'quiz-game': { 
+        title: 'Quiz Game Platform', 
+        type: 'Dynamic State Interface', 
+        desc: 'An interactive quiz application featuring score tracking, question logic, and dynamic state-based UI updates.', 
+        img: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'snake-game': { 
+        title: 'Snake Retro Game Loop', 
+        type: 'Canvas Engine Blueprint', 
+        desc: 'A classic snake game implemented using canvas rendering, handling movement logic, collision detection, and score tracking.', 
+        img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'tic-tac-toe': { 
+        title: 'Tic Tac Toe Engine', 
+        type: 'Conditional State Array Logic', 
+        desc: 'A two-player game implementing win-condition algorithms and turn-based state management using array logic.', 
+        img: 'https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    },
+
+    'todo-web': { 
+        title: 'To Do List Dashboard', 
+        type: 'CRUD UI Web Component', 
+        desc: 'A task management tool supporting add, delete, and update operations with persistent client-side storage.', 
+        img: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800&q=80', 
+        isTerminal: false 
+    }
+};
+
+        function triggerScreenshotModal(key) {
+            const data = projectMetaDb[key];
+            if (!data) return;
+            const imgFrame = document.getElementById('modal-img-frame');
+            const termMock = document.getElementById('modal-terminal-mock');
+
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-subtitle').textContent = data.type;
+            document.getElementById('modal-description').textContent = data.desc;
+            imgFrame.classList.add('hidden');
+            termMock.classList.add('hidden');
+
+            if (data.isTerminal) {
+                termMock.classList.remove('hidden');
+                document.getElementById('modal-script-name').textContent = key + ".py";
+            } else {
+                imgFrame.src = data.img;
+                imgFrame.classList.remove('hidden');
+                imgFrame.onerror = () => {
+                imgFrame.classList.add('hidden');
+                termMock.classList.remove('hidden');
+                termMock.innerHTML = `
+                <div class="text-center text-slate-500 py-10">
+                    Image not found: ${data.img}
+                </div>
+                `;
+                };
+            }
+
+            document.getElementById('screenshot-lightbox')
+            .classList.remove('hidden');
+            document.getElementById('screenshot-lightbox')
+            .classList.add('flex');
+        }
+
+        function closeScreenshotModal() {
+            const modal = document.getElementById('screenshot-lightbox');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Horizontal Timeline Input Multi-Slider Logic
+        const timelineRange = document.getElementById('timeline-range');
+        const slides = {
+            2024: document.getElementById('slide-2024'),
+            2025: document.getElementById('slide-2025'),
+            2026: document.getElementById('slide-2026')
+        };
+        const ticks = {
+            2024: document.getElementById('tick-2024'),
+            2025: document.getElementById('tick-2025'),
+            2026: document.getElementById('tick-2026')
+        };
+
+        timelineRange.addEventListener('input', (e) => {
+            const val = e.target.value;
+            Object.keys(slides).forEach(year => {
+                if(year == val) {
+                    slides[year].classList.remove('hidden');
+                    slides[year].classList.add('block');
+                    ticks[year].classList.add('text-blue-400');
+                    ticks[year].classList.remove('text-slate-500');
+                } else {
+                    slides[year].classList.remove('block');
+                    slides[year].classList.add('hidden');
+                    ticks[year].classList.remove('text-blue-400');
+                    ticks[year].classList.add('text-slate-500');
+                }
+            });
+        });
+
+        // Background Core Particle Canvas Animation Processing
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = '#60A5FA';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        function initParticles() {
+            particles = [];
+            const density = Math.floor((canvas.width * canvas.height) / 9000);
+            for (let i = 0; i < Math.min(density, 120); i++) particles.push(new Particle());
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
