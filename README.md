@@ -65,6 +65,8 @@ Email: krishanshchawla0@gmail.com
 
 GitHub: https://github.com/Krishansh-Chawla
 
+LinkedIn: https://www.linkedin.com/in/krishansh-chawla-216a63415/
+
 ---
 
 © 2026 Krishansh Chawla
